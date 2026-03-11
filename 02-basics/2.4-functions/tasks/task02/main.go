@@ -26,8 +26,25 @@ import "fmt"
 // Подсказка: текущее значение храни в переменной внутри makeCounter,
 // и обращайся к ней из возвращаемой функции (это и есть замыкание)
 
-func main() {
-	// TODO: создай два независимых счётчика и проверь их работу
+func makeCounter(start int) func() int {
+	counter := start
+	return func() int {
+		counter++
+		return counter
+	}
+}
 
-	fmt.Println("Допиши код!")
+func main() {
+	counter := makeCounter(0)
+	fmt.Println("Счетчик_1: ", counter())
+	fmt.Println("Счетчик_1: ", counter())
+	fmt.Println("Счетчик_1: ", counter())
+	fmt.Println("Счетчик_1: ", counter())
+	fmt.Println("Счетчик_1: ", counter())
+	fmt.Println("=============================")
+	counter_2 := makeCounter(100)
+	fmt.Println("Счетчик_2: ", counter_2())
+	fmt.Println("Счетчик_2: ", counter_2())
+	fmt.Println("Счетчик_2: ", counter_2())
+	fmt.Println("Счетчик_2: ", counter_2())
 }
