@@ -27,6 +27,8 @@ import (
 	// TODO: импортируй пакет из module-b
 	// "github.com/yourname/module-b"
 	"fmt"
+
+	moduleb "github.com/Enot-P/module-b"
 )
 
 func main() {
@@ -34,4 +36,5 @@ func main() {
 	// Пример: fmt.Println(moduleb.SayHello())
 
 	fmt.Println("Допиши этот код!")
+	fmt.Println(moduleb.SayHello())
 }
