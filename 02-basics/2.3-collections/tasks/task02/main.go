@@ -19,10 +19,22 @@ package main
 
 import (
 	"fmt"
+	"maps"
 	"slices"
 )
 
 // TODO: напиши функцию invertMap(m map[string]int) map[int]string
+
+// NOTE: maps.Collect как работает и что за iter.Seq2 чудище такое?
+func invertMap(m map[string]int) map[int]string {
+	newMap := map[int]string{}
+
+	for key, value := range m {
+		newMap[value] = key
+	}
+
+	return newMap
+}
 
 func main() {
 	fruits := map[string]int{
@@ -32,11 +44,15 @@ func main() {
 	}
 
 	// TODO: вызови invertMap и сохрани результат
-	// inverted := invertMap(fruits)
+	inverted := invertMap(fruits)
 
 	// TODO: собери ключи из inverted в срез, отсортируй их
 	// и выведи каждую пару в формате: "1 -> яблоко"
 
-	_ = fruits
-	_ = slices.Sort[[]int] // убери когда будешь использовать
+	keys := slices.Collect(maps.Keys(inverted))
+	slices.Sort(keys)
+
+	for _, v := range keys {
+		fmt.Printf("%d -> %v \n", v, inverted[v])
+	}
 }
