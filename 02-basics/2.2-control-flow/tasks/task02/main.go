@@ -19,10 +19,23 @@
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"slices"
+)
 
 // TODO: напиши функцию countVowels(s string) int
 // Внутри используй for range и switch для проверки каждого символа
+func countVowels(s string) int {
+	var count int
+	vowels := []rune{'а', 'е', 'ё', 'и', 'й', 'о', 'у', 'ы', 'э', 'ю', 'я', 'А', 'Е', 'Ё', 'И', 'Й', 'О', 'У', 'Ы', 'Э', 'Ю', 'Я', 'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'}
+	for _, word := range s {
+		if slices.Contains(vowels, word) {
+			count++
+		}
+	}
+	return count
+}
 
 func main() {
 	tests := []string{"Привет мир", "Hello World", "Go"}
