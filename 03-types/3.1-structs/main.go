@@ -47,6 +47,16 @@ type Article struct {
 	Audit
 }
 
+type ContactInfo struct {
+	Phone string
+	Email string
+}
+type Client struct {
+	ID      string
+	Address Address
+	ContactInfo
+}
+
 func main() {
 	// task 3.1.1
 	user := Profile{
@@ -100,4 +110,17 @@ func main() {
 	}
 
 	fmt.Printf("\nTitle:%s | CreatedAt: %s | UpdatedAt: %s\n", article.Title, article.CreatedAt, article.UpdatedAt) // Title:Title | CreatedAt: today | UpdatedAt: today
+
+	// task 3.1.6
+	client := Client{
+		ID: "IDIDIDID",
+		Address: Address{
+			City:   "Moscow",
+			Street: "Street",
+		},
+	}
+	client.ContactInfo.Email = "Email"
+	client.ContactInfo.Phone = "89183849123"
+
+	fmt.Printf("\nID:%s | City:%s | Email:%s\n", client.ID, client.Address.City, client.Email) // ID:IDIDIDID | City:Moscow | Email:Email
 }
