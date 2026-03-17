@@ -31,12 +31,36 @@ type User struct {
 	Name string
 }
 
-func (u *User) printUserName() {
+func (*User) printUserName(u *User) {
 	if u == nil {
 		fmt.Println("user is nil")
 		return
 	}
 	fmt.Println("User exist: ", u.Name)
+}
+
+type Timer struct {
+	Seconds int
+	Running bool
+}
+
+func (t *Timer) Start() {
+	t.Running = true
+}
+
+func (t *Timer) Stop() {
+	t.Running = false
+}
+
+func (t *Timer) Status() string {
+	if t == nil {
+		return "t is nil"
+	}
+	if t.Running == true {
+		return "running"
+	} else {
+		return "stopped"
+	}
 }
 
 func main() {
@@ -65,7 +89,18 @@ func main() {
 	user := User{Name: "Nikita"}
 	var user2 User
 	var user3 *User = nil
-	user.printUserName()  // User exist:  Nikita
-	user2.printUserName() // User exist:
-	user3.printUserName() // user is nil
+	user.printUserName(&user)  // User exist:  Nikita
+	user.printUserName(&user2) // User exist:
+	user.printUserName(user3)  // user is nil
+
+	// task 3.2.6
+	timer := Timer{
+		Seconds: 0,
+		Running: false,
+	}
+	fmt.Println("\n")
+	timer.Start()
+	fmt.Println(timer.Status()) // running
+	timer.Stop()
+	fmt.Println(timer.Status()) // stopped
 }
