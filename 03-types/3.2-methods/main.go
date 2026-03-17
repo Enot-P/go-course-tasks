@@ -27,6 +27,18 @@ func resetScore(score *int) {
 	*score = 0
 }
 
+type User struct {
+	Name string
+}
+
+func (u *User) printUserName() {
+	if u == nil {
+		fmt.Println("user is nil")
+		return
+	}
+	fmt.Println("User exist: ", u.Name)
+}
+
 func main() {
 	// task 3.2.1
 	fmt.Printf("%s", Book{Title: "title", Pages: 12}.Summary()) // title (12 pages)
@@ -47,5 +59,13 @@ func main() {
 	score := 1111
 	fmt.Printf("\nCurrent score:%d", score)
 	resetScore(&score)
-	fmt.Printf("\nScore after reset:%d\n", score)
+	fmt.Printf("\nScore after reset:%d\n\n", score)
+
+	// task 3.2.5
+	user := User{Name: "Nikita"}
+	var user2 User
+	var user3 *User = nil
+	user.printUserName()  // User exist:  Nikita
+	user2.printUserName() // User exist:
+	user3.printUserName() // user is nil
 }
