@@ -23,6 +23,10 @@ func (w Wallet) DepositCopy(amount int) {
 	w.Balance += amount
 }
 
+func resetScore(score *int) {
+	*score = 0
+}
+
 func main() {
 	// task 3.2.1
 	fmt.Printf("%s", Book{Title: "title", Pages: 12}.Summary()) // title (12 pages)
@@ -38,4 +42,10 @@ func main() {
 	// task 3.2.3
 	wallet.DepositCopy(4)
 	fmt.Printf("\n\nwallet: %d <--- after copy\n", wallet.Balance) // wallet: 4 <--- after copy
+
+	// task 3.2.4
+	score := 1111
+	fmt.Printf("\nCurrent score:%d", score)
+	resetScore(&score)
+	fmt.Printf("\nScore after reset:%d\n", score)
 }
