@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Book struct {
 	Title string
@@ -63,6 +65,31 @@ func (t *Timer) Status() string {
 	}
 }
 
+type BankAccount struct {
+	Owner   string
+	Balance int
+}
+
+func (bankAcc *BankAccount) Deposit(amount int) {
+	bankAcc.Balance += amount
+}
+
+func (bankAcc *BankAccount) Withdraw(amount int) (bool, error) {
+	if bankAcc == nil {
+		return false, fmt.Errorf("bankAcc is nill")
+	}
+	if bankAcc.Balance < amount {
+		return false, nil
+	} else {
+		bankAcc.Balance -= amount
+		return true, nil
+	}
+}
+
+func (bankAcc *BankAccount) GetInfo() string {
+	return fmt.Sprintf("user:%s | balance:%d", bankAcc.Owner, bankAcc.Balance)
+}
+
 func main() {
 	// task 3.2.1
 	fmt.Printf("%s", Book{Title: "title", Pages: 12}.Summary()) // title (12 pages)
@@ -103,4 +130,23 @@ func main() {
 	fmt.Println(timer.Status()) // running
 	timer.Stop()
 	fmt.Println(timer.Status()) // stopped
+
+	// task 3.2.7
+	bankAcc := BankAccount{Owner: "Nikita", Balance: 100}
+	bankAcc.Deposit(10)
+	fmt.Println(bankAcc.GetInfo()) // user:Nikita | balance:110
+
+	bankAcc.Withdraw(123)
+	fmt.Println(bankAcc.GetInfo()) // user:Nikita | balance:110
+
+	status, err := bankAcc.Withdraw(123)
+	if err == nil {
+		fmt.Printf("Error:%v\n", err) // Error:<nil>
+	} else {
+		fmt.Println(status)
+	}
+	fmt.Println(bankAcc.GetInfo()) // user:Nikita | balance:110
+
+	bankAcc.Withdraw(10)
+	fmt.Println(bankAcc.GetInfo()) // user:Nikita | balance:100
 }
