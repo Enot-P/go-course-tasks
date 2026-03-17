@@ -57,6 +57,12 @@ type Client struct {
 	ContactInfo
 }
 
+type CourseEnrollment struct {
+	CourseID int
+	Client   Client
+	Audit
+}
+
 func main() {
 	// task 3.1.1
 	user := Profile{
@@ -119,8 +125,37 @@ func main() {
 			Street: "Street",
 		},
 	}
-	client.ContactInfo.Email = "Email"
-	client.ContactInfo.Phone = "89183849123"
+	client.Email = "Email"
+	client.Phone = "89183849123"
 
 	fmt.Printf("\nID:%s | City:%s | Email:%s\n", client.ID, client.Address.City, client.Email) // ID:IDIDIDID | City:Moscow | Email:Email
+
+	// tasl 3.1.7
+	course := CourseEnrollment{
+		CourseID: 0,
+		Client: Client{
+			ID: "ClientID",
+			Address: Address{
+				City:   "Moscow",
+				Street: "Street",
+			},
+		},
+		Audit: Audit{
+			CreatedAt: "tommorow",
+			UpdatedAt: "2x tommorow",
+		},
+	}
+
+	course.Client.Phone = "891838"
+	course.Client.Email = "new@mail.ru"
+
+	// NOTE: Как это читать?! Это норм?
+	fmt.Printf("\nID:%d\n---Client Info:---\nPhone:%s\nEmail:%s\nCreatedAt:%s\nUpdatedAt:%s\nAddress:%s,%s",
+		course.CourseID,              // ID:0
+		course.Client.Phone,          // ---Client Info:---
+		course.Client.Email,          // Phone:891838
+		course.CreatedAt,             // Email:new@mail.ru
+		course.UpdatedAt,             // CreatedAt:tommorow
+		course.Client.Address.City,   // UpdatedAt:2x tommorow
+		course.Client.Address.Street) // Address:Moscow,Street
 }
