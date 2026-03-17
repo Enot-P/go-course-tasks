@@ -19,6 +19,10 @@ func (w *Wallet) Deposit(amount int) {
 	w.Balance += amount
 }
 
+func (w Wallet) DepositCopy(amount int) {
+	w.Balance += amount
+}
+
 func main() {
 	// task 3.2.1
 	fmt.Printf("%s", Book{Title: "title", Pages: 12}.Summary()) // title (12 pages)
@@ -30,4 +34,8 @@ func main() {
 	wallet.Deposit(1)
 	wallet.Deposit(1)
 	fmt.Printf("\n\nwallet: %d\n", wallet.Balance) // wallet: 4
+
+	// task 3.2.3
+	wallet.DepositCopy(4)
+	fmt.Printf("\n\nwallet: %d <--- after copy\n", wallet.Balance) // wallet: 4 <--- after copy
 }
