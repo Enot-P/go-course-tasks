@@ -20,7 +20,6 @@ type Address struct {
 	City   string
 	Street string
 }
-
 type Employee struct {
 	Name    string
 	Address Address
@@ -30,15 +29,22 @@ type Package struct {
 	ID     string
 	Weight int
 }
-
 type Destination struct {
 	City string
 	Zip  string
 }
-
 type Shipment struct {
 	Package     Package
 	Destination Destination
+}
+
+type Audit struct {
+	CreatedAt string
+	UpdatedAt string
+}
+type Article struct {
+	Title string
+	Audit
 }
 
 func main() {
@@ -83,4 +89,15 @@ func main() {
 	}
 
 	fmt.Printf("\nId:%s | Address: %s\n", ship.Package.ID, ship.Destination.City) // Id:IDIDID | Address: Moscow
+
+	// task 3.1.5
+	article := Article{
+		Title: "Title",
+		Audit: Audit{
+			CreatedAt: "today",
+			UpdatedAt: "today",
+		},
+	}
+
+	fmt.Printf("\nTitle:%s | CreatedAt: %s | UpdatedAt: %s\n", article.Title, article.CreatedAt, article.UpdatedAt) // Title:Title | CreatedAt: today | UpdatedAt: today
 }
