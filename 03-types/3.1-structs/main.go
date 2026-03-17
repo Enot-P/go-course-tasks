@@ -16,6 +16,16 @@ type AppConfig struct {
 	Debug bool
 }
 
+type Address struct {
+	City   string
+	Street string
+}
+
+type Employee struct {
+	Name    string
+	Address Address
+}
+
 func main() {
 	// task 3.1.1
 	user := Profile{
@@ -33,5 +43,15 @@ func main() {
 	}
 
 	fmt.Println("AppConfig = ", cfg)
-	fmt.Printf("\nHost:%s\nPort:%d\nisActive:%t", cfg.Host, cfg.Port, cfg.Debug) // Host:cofig Port:12 isActive:true
+	fmt.Printf("\nHost:%s\nPort:%d\nisActive:%t\n", cfg.Host, cfg.Port, cfg.Debug) // Host:cofig Port:12 isActive:true
+
+	// task 3.1.3
+	employe := Employee{
+		Name: "Employe",
+		Address: Address{
+			City:   "Moscow",
+			Street: "Krasnya",
+		},
+	}
+	fmt.Printf("\n%s:%s, %s\n", employe.Name, employe.Address.City, employe.Address.Street) // Employe:Moscow, Krasnya
 }
