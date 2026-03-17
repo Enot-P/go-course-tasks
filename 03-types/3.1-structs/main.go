@@ -26,6 +26,21 @@ type Employee struct {
 	Address Address
 }
 
+type Package struct {
+	ID     string
+	Weight int
+}
+
+type Destination struct {
+	City string
+	Zip  string
+}
+
+type Shipment struct {
+	Package     Package
+	Destination Destination
+}
+
 func main() {
 	// task 3.1.1
 	user := Profile{
@@ -54,4 +69,18 @@ func main() {
 		},
 	}
 	fmt.Printf("\n%s:%s, %s\n", employe.Name, employe.Address.City, employe.Address.Street) // Employe:Moscow, Krasnya
+
+	// task 3.1.4
+	ship := Shipment{
+		Package: Package{
+			ID:     "IDIDID",
+			Weight: 100,
+		},
+		Destination: Destination{
+			City: "Moscow",
+			Zip:  "Zip",
+		},
+	}
+
+	fmt.Printf("\nId:%s | Address: %s\n", ship.Package.ID, ship.Destination.City) // Id:IDIDID | Address: Moscow
 }
