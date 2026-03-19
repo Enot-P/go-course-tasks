@@ -12,7 +12,16 @@ func safeDivide(a, b int) (int, error) {
 	return a / b, nil
 }
 
+func CreateUser(name string) error {
+	if name == "" {
+		return errors.New("Имя не должно быть пустым")
+	}
+	fmt.Printf("\n%s - создан\n", name)
+	return nil
+}
+
 func main() {
+	// task 3.4.1
 	res, err := safeDivide(1, 0)
 	if err != nil {
 		fmt.Printf("Error: %v\n", err) // На ноль делить нельзя
@@ -26,4 +35,10 @@ func main() {
 	} else {
 		fmt.Printf("%d\n", res2) // 1
 	}
+
+	// task 3.4.2
+	errorUser := CreateUser("")         //
+	fmt.Println(errorUser)              // Имя не должно быть пустым
+	notErrorUser := CreateUser("Anton") // Anton - создан
+	fmt.Println(notErrorUser)           // <nil>
 }
