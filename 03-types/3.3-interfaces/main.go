@@ -44,6 +44,16 @@ func (s Square) Area() float64 {
 	return s.Side * s.Side
 }
 
+type Runner interface {
+	Run() string
+}
+
+type Athlete struct{}
+
+func (a Athlete) Run() string {
+	return "Athlete is running"
+}
+
 func main() {
 	// task 3.3.1
 	user := User{}
@@ -60,4 +70,10 @@ func main() {
 	for _, shape := range shapes {
 		fmt.Println(shape.Area())
 	}
+
+	// task 3.3.3
+	athlete := Athlete{}
+	fmt.Println(athlete.Run())
+
+	var _ Runner = Athlete{} // Компилится, в чем смысл?
 }
