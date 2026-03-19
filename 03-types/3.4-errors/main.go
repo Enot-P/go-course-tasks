@@ -20,6 +20,16 @@ func CreateUser(name string) error {
 	return nil
 }
 
+var ErrOutOfStock = errors.New("out of stock")
+
+func buyItem(count int) error {
+	if count == 0 {
+		return ErrOutOfStock
+	}
+
+	return nil
+}
+
 func main() {
 	// task 3.4.1
 	res, err := safeDivide(1, 0)
@@ -41,4 +51,14 @@ func main() {
 	fmt.Println(errorUser)              // Имя не должно быть пустым
 	notErrorUser := CreateUser("Anton") // Anton - создан
 	fmt.Println(notErrorUser)           // <nil>
+
+	// task 3.4.3
+	errCount := buyItem(0)
+	if errCount != nil {
+		if errors.Is(errCount, ErrOutOfStock) {
+			fmt.Printf("\nErrOutOfStock Error: %v\n", errCount) // ErrOutOfStock Error: out of stock
+		}
+		fmt.Printf("usual error: %v\n", errCount) // usual error: out of stock
+
+	}
 }
