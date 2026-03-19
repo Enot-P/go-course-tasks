@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"time"
 )
@@ -92,6 +93,46 @@ func printStringLength(x any) {
 	fmt.Println(len(result))
 }
 
+type PaymentProcessor interface {
+	Pay(amount int) error
+}
+
+type CardProcessor struct {
+	CardNumber string
+}
+
+func (c CardProcessor) Pay(amount int) error {
+	if amount <= 0 {
+		return errors.New("сумма платежа должна быть положительной")
+	}
+
+	if len(c.CardNumber) != 16 {
+		return errors.New("неверный номер карты")
+	}
+
+	fmt.Printf("Оплата картой %s на сумму %d рублей выполнена успешно\n", c.CardNumber, amount)
+
+	return nil
+}
+
+type CashProcessor struct{}
+
+func (c CashProcessor) Pay(amount int) error {
+	if amount <= 0 {
+		return errors.New("сумма платежа должна быть положительной")
+	}
+
+	fmt.Printf("Оплата наличными на сумму %d рублей выполнена успешно\n", amount)
+	return nil
+}
+
+func checkout(p PaymentProcessor, amount int) {
+	err := p.Pay(amount)
+	if err != nil {
+		fmt.Printf("Ошибка платежа: %v\n", err)
+	}
+}
+
 func main() {
 	// task 3.3.1
 	user := User{}
@@ -122,4 +163,16 @@ func main() {
 	// task 3.3.5
 	printStringLength(42)        // Not a string
 	printStringLength("2334324") // 7
+
+	// task 3.3.6
+	cardProcessor := CardProcessor{CardNumber: "1234567890123456"}
+	cashProcessor := CashProcessor{}
+
+	// Тестируем различные платежи
+	checkout(cardProcessor, 1500) // Оплата картой 1234567890123456 на сумму 1500 рублей выполнена успешно
+	checkout(cashProcessor, 3500) // Оплата наличными на сумму 3500 рублей выполнена успешно
+	invalidCard := CardProcessor{CardNumber: "123"}
+	checkout(invalidCard, 1000)    // Ошибка платежа: неверный номер карты
+	checkout(cashProcessor, 60000) // Оплата наличными на сумму 60000 рублей выполнена успешно
+	checkout(cardProcessor, -100)  // Ошибка платежа: сумма платежа должна быть положительной
 }
