@@ -83,6 +83,15 @@ func runCycle(m Machine) {
 	m.Stop()
 }
 
+func printStringLength(x any) {
+	result, ok := x.(string)
+	if !ok {
+		fmt.Println("Not a string")
+		return
+	}
+	fmt.Println(len(result))
+}
+
 func main() {
 	// task 3.3.1
 	user := User{}
@@ -109,4 +118,8 @@ func main() {
 	// task 3.3.4
 	bmwEngine := Engine{} // Machine is starting
 	runCycle(bmwEngine)   // Machine is stopped
+
+	// task 3.3.5
+	printStringLength(42)        // Not a string
+	printStringLength("2334324") // 7
 }
