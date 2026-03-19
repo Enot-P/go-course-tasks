@@ -133,6 +133,30 @@ func checkout(p PaymentProcessor, amount int) {
 	}
 }
 
+type Logger interface {
+	Log(message string)
+}
+
+type ConsoleLogger struct{}
+
+func (cl ConsoleLogger) Log(message string) {
+	fmt.Printf("\nConsoleLogger => %s\n", message)
+}
+
+type PrefixLogger struct {
+	Prefix string
+}
+
+func (pf PrefixLogger) Log(message string) {
+	fmt.Printf("\n%s - %s\n", pf.Prefix, message)
+}
+
+func processOrder(logger Logger, id string) {
+	logger.Log("order start")
+	time.Sleep(1 * time.Second)
+	logger.Log("order complete")
+}
+
 func main() {
 	// task 3.3.1
 	user := User{}
@@ -175,4 +199,16 @@ func main() {
 	checkout(invalidCard, 1000)    // Ошибка платежа: неверный номер карты
 	checkout(cashProcessor, 60000) // Оплата наличными на сумму 60000 рублей выполнена успешно
 	checkout(cardProcessor, -100)  // Ошибка платежа: сумма платежа должна быть положительной
+
+	// task 3.3.7
+	console := ConsoleLogger{}
+	prefix := PrefixLogger{Prefix: "order"}
+
+	processOrder(console, "0")
+	// ConsoleLogger => order start
+	// ConsoleLogger => order complete
+
+	processOrder(prefix, "1")
+	// order - order start
+	// order - order complete
 }
