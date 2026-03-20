@@ -30,6 +30,15 @@ func buyItem(count int) error {
 	return nil
 }
 
+func readFileMock() error {
+	return errors.New("base error")
+}
+
+func loadData() error {
+	err := readFileMock()
+	return fmt.Errorf("%w", err)
+}
+
 func main() {
 	// task 3.4.1
 	res, err := safeDivide(1, 0)
@@ -61,4 +70,8 @@ func main() {
 		fmt.Printf("usual error: %v\n", errCount) // usual error: out of stock
 
 	}
+
+	// task 3.4.4
+	fmt.Println()
+	fmt.Println(loadData()) // base error
 }
