@@ -43,6 +43,15 @@ type Pair[K comparable, V any] struct {
 	Value V
 }
 
+func Values[K comparable, V any](m map[K]V) []V {
+	res := make([]V, 0, len(m))
+
+	for _, v := range m {
+		res = append(res, v)
+	}
+	return res
+}
+
 func main() {
 	fmt.Println(Echo(1))
 	fmt.Println(Echo(true))
@@ -85,4 +94,15 @@ func main() {
 	}
 	fmt.Println(firstPair)
 	fmt.Println(secondPair)
+
+	fmt.Println("")
+	fmt.Println("/////task 3.5.6/////")
+	// task 3.5.6
+	m := map[string]int{
+		"apple":  5,
+		"banana": 3,
+		"cherry": 7,
+	}
+
+	fmt.Println(Values(m))
 }
