@@ -52,6 +52,27 @@ func Values[K comparable, V any](m map[K]V) []V {
 	return res
 }
 
+func Contains[T comparable](item []T, target T) bool {
+	for _, v := range item {
+		if v == target {
+			return true
+		}
+	}
+	return false
+}
+
+type Store[T any] struct {
+	items []T
+}
+
+func (s *Store[T]) Add(item T) {
+	s.items = append(s.items, item)
+}
+
+func (s *Store[T]) All() []T {
+	return s.items
+}
+
 func main() {
 	fmt.Println(Echo(1))
 	fmt.Println(Echo(true))
@@ -105,4 +126,19 @@ func main() {
 	}
 
 	fmt.Println(Values(m))
+
+	fmt.Println("")
+	fmt.Println("/////task 3.5.7/////")
+	// task 3.5.7
+	var storeString Store[string]
+	var storeInt Store[int]
+
+	storeString.Add("123")
+	storeInt.Add(123456)
+	fmt.Println(storeString.All())
+	fmt.Println(storeInt.All())
+	fmt.Println(Contains(storeString.All(), "123")) // true
+	fmt.Println(Contains(storeInt.All(), 123456))   // true
+	fmt.Println(Contains(storeString.All(), "12"))  // false
+	fmt.Println(Contains(storeInt.All(), 12345))    // false
 }
