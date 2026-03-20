@@ -39,6 +39,25 @@ func loadData() error {
 	return fmt.Errorf("%w", err)
 }
 
+type InputError struct {
+	Field  string
+	Reason string
+}
+
+func (ir *InputError) Error() string {
+	return fmt.Sprintf("Field:%s | Reason:%s", ir.Field, ir.Reason)
+}
+
+func validateEmail(email string) error {
+	if email == "" {
+		return &InputError{
+			Field:  "email",
+			Reason: "email field is empty",
+		}
+	}
+	return nil
+}
+
 func main() {
 	// task 3.4.1
 	res, err := safeDivide(1, 0)
@@ -74,4 +93,14 @@ func main() {
 	// task 3.4.4
 	fmt.Println()
 	fmt.Println(loadData()) // base error
+	fmt.Println()
+
+	// task 3.4.5
+	err35 := validateEmail("")
+	if inputError, ok := errors.AsType[*InputError](err35); ok { // Мне lsp подсказал так сделать
+		fmt.Println(inputError.Error())                  // Field:email | Reason:email field is empty
+		fmt.Println(inputError.Field, inputError.Reason) // email email field is empty
+	} else {
+		fmt.Println("Not error found")
+	}
 }
