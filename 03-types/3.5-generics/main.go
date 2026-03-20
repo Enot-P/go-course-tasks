@@ -29,6 +29,15 @@ func Sum[T Number](items []T) T {
 	return sum
 }
 
+func IndexOf[T comparable](items []T, target T) int {
+	for i, item := range items {
+		if item == target {
+			return i
+		}
+	}
+	return -1
+}
+
 func main() {
 	fmt.Println(Echo(1))
 	fmt.Println(Echo(true))
@@ -47,4 +56,9 @@ func main() {
 
 	fmt.Println(Sum(intSlice))   // 21
 	fmt.Println(Sum(floatSlice)) // 15.600000000000001
+	fmt.Println("")
+
+	// task 3.5.4
+	fmt.Println(IndexOf(intSlice, 3))  // 2
+	fmt.Println(IndexOf(intSlice, 30)) // -1
 }
