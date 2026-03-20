@@ -66,6 +66,30 @@ func parseID(s string) (int, error) {
 	return strconv.Atoi(s)
 }
 
+func validateName(name string) error {
+	if name == "" {
+		return fmt.Errorf("name is empty")
+	}
+	return nil
+}
+
+func validateAge(age int) error {
+	if age < 18 {
+		return errors.New("age < 18")
+	}
+	return nil
+}
+
+func register(name string, age int) error {
+	okName := validateName(name)
+	okAge := validateAge(age)
+
+	if okAge != nil || okName != nil {
+		return errors.Join(okName, okAge)
+	}
+	return nil
+}
+
 func main() {
 	// task 3.4.1
 	res, err := safeDivide(1, 0)
@@ -131,4 +155,12 @@ func main() {
 		}
 		fmt.Println("ok", value)
 	}
+
+	fmt.Println("")
+	// task 3.4.7
+
+	fmt.Println(register("", 0))      // name is empty  age < 18
+	fmt.Println(register("Name", 0))  // age < 18
+	fmt.Println(register("", 18))     // name is empty
+	fmt.Println(register("Name", 18)) // <nil>
 }
