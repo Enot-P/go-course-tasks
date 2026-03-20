@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"strconv"
 )
 
 func safeDivide(a, b int) (int, error) {
@@ -58,6 +59,13 @@ func validateEmail(email string) error {
 	return nil
 }
 
+func parseID(s string) (int, error) {
+	if s == "" {
+		return 0, fmt.Errorf("empty string")
+	}
+	return strconv.Atoi(s)
+}
+
 func main() {
 	// task 3.4.1
 	res, err := safeDivide(1, 0)
@@ -102,5 +110,25 @@ func main() {
 		fmt.Println(inputError.Field, inputError.Reason) // email email field is empty
 	} else {
 		fmt.Println("Not error found")
+	}
+
+	fmt.Println()
+	// task 3.4.6
+	ids := make([]string, 0)
+	fmt.Println(ids)
+	ids = append(ids, "")
+	ids = append(ids, "2")
+	ids = append(ids, "3")
+	ids = append(ids, "")
+	ids = append(ids, "4")
+	ids = append(ids, "5")
+	ids = append(ids, "")
+	for _, id := range ids {
+		value, err := parseID(id)
+		if err != nil {
+			fmt.Println("skip")
+			continue
+		}
+		fmt.Println("ok", value)
 	}
 }
