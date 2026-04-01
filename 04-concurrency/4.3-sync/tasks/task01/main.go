@@ -25,18 +25,46 @@ import (
 	"sync"
 )
 
-// TODO: напиши структуру SafeCounter
-// type SafeCounter struct { ... }
+type SafeCounter struct {
+	mu    sync.Mutex
+	value int
+}
 
-// TODO: напиши метод Increment()
+func (sf *SafeCounter) Increment() {
+	sf.mu.Lock()
+	defer sf.mu.Unlock()
 
-// TODO: напиши метод Value() int
+	sf.value++
+}
+
+func (sf *SafeCounter) Value() int {
+	sf.mu.Lock()
+	defer sf.mu.Unlock()
+
+	return sf.value
+}
 
 func main() {
 	// TODO: создай SafeCounter и запусти 1000 горутин
 	// Каждая горутина вызывает counter.Increment()
 	// После завершения всех горутин выведи counter.Value()
 
-	_ = fmt.Println
-	_ = sync.Mutex{}
+	safeCounter := SafeCounter{
+		mu:    sync.Mutex{},
+		value: 0,
+	}
+
+	var wg sync.WaitGroup
+
+	for i := 0; i < 1000; i++ {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			safeCounter.Increment()
+		}()
+	}
+	wg.Wait()
+
+	fmt.Println("Финальное значение: ", safeCounter.Value())
+
 }
