@@ -31,17 +31,42 @@ import (
 
 // TODO: напиши функцию worker(id int, jobs <-chan int, results chan<- string, wg *sync.WaitGroup)
 
+// сменил string на int
+func worker(id int, jobs <-chan int, results chan<- string, wg *sync.WaitGroup) {
+	defer wg.Done()
+
+	for job := range jobs {
+		answer := job * job
+		results <- fmt.Sprintf("Задача %d: %d^2 = %d", id, job, answer)
+	}
+}
+
 func main() {
 	// TODO: создай каналы jobs и results
+	jobs := make(chan int, 12)
+	results := make(chan string, 12)
+
+	var wg sync.WaitGroup
 
 	// TODO: запусти 3 воркера через цикл
+	for i := 0; i < 3; i++ {
+		wg.Add(1)
+		go worker(i, jobs, results, &wg)
+	}
 
 	// TODO: закинь задачи 1..12 в jobs и закрой канал
-
+	for i := 1; i <= 12; i++ {
+		jobs <- i
+	}
+	close(jobs)
 	// TODO: запусти горутину, которая ждёт все wg.Wait() и потом закрывает results
 
-	// TODO: выведи результаты из results через range
+	wg.Wait()
+	close(results)
 
-	_ = fmt.Println
-	_ = sync.WaitGroup{}
+	// TODO: выведи результаты из results через range
+	for v := range results {
+		fmt.Println(v)
+	}
+
 }
