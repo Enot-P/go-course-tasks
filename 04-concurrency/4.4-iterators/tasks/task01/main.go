@@ -48,7 +48,9 @@ func (s *Stack) Push(val int) {
 // TODO: напиши метод All() iter.Seq[int]
 // Подсказка: перебирай items с конца (от len-1 до 0)
 // Не забудь проверять возвращаемое значение yield и прерваться если false
-func (s *Stack) All() iter.Seq[int] {
+
+// INFO: Лучше назвать метод Backward
+func (s *Stack) Bacward() iter.Seq[int] {
 	return func(yield func(int) bool) {
 		for i := len(s.items) - 1; i >= 0; i-- {
 			if !yield(s.items[i]) {
@@ -70,13 +72,13 @@ func main() {
 	fmt.Println("Все элементы стека:")
 	// TODO: for range stack.All() { ... }
 
-	for v := range stack.All() {
+	for v := range stack.Bacward() {
 		fmt.Println(v)
 	}
 
 	fmt.Println("\nДо элемента 3:")
 	// TODO: for range stack.All() { if v == 3 { break } ... }
-	for v := range stack.All() {
+	for v := range stack.Bacward() {
 		fmt.Println(v)
 		if v == 3 {
 			break
