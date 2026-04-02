@@ -28,6 +28,18 @@ import (
 // Подсказка: используй две переменные a и b
 // Не забудь проверить возвращаемое значение yield!
 
+func Fibonacci() iter.Seq[int] {
+	a, b := 0, 1
+	return func(yield func(int) bool) {
+		for {
+			if !yield(a) {
+				return
+			}
+			a, b = b, a+b
+		}
+	}
+}
+
 func main() {
 	count := 0
 	for n := range Fibonacci() {
@@ -39,5 +51,4 @@ func main() {
 	}
 	fmt.Println()
 
-	_ = iter.Seq[int](nil) // убери когда начнёшь использовать
 }
