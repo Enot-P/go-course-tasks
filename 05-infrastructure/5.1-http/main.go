@@ -28,7 +28,8 @@ func main() {
 
 	mux.HandleFunc("GET /api/v1/users/{id}", UserID)
 
-	mux.HandleFunc("POST /api/v1/tokens", TokenHand)
+	mux.HandleFunc("POST /api/v1/tokens", TokenPost)
+	mux.HandleFunc("GET /api/v1/tokens/{id}", TokenGet)
 
 	server := http.Server{
 		Addr:              ":8080",

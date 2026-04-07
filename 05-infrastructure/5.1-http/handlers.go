@@ -23,7 +23,7 @@ func UserID(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func TokenHand(w http.ResponseWriter, r *http.Request) {
+func TokenPost(w http.ResponseWriter, r *http.Request) {
 	var user User
 
 	err := json.NewDecoder(r.Body).Decode(&user)
@@ -39,4 +39,18 @@ func TokenHand(w http.ResponseWriter, r *http.Request) {
 
 	writeJson(w, http.StatusOK, Token{Access_token: "sdfsawerwarjls"})
 
+}
+
+func TokenGet(w http.ResponseWriter, r *http.Request) {
+	id := r.PathValue("id")
+
+	if id == "" {
+		writeJson(w, http.StatusBadRequest, ErrorResponse{Message: "token_id is required"})
+		return
+	}
+
+	writeJson(w, http.StatusOK, map[string]string{
+		"Access_token": "sdal;fjsdafl",
+		"token_id":     id,
+	})
 }

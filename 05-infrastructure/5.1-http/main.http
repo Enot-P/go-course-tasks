@@ -23,3 +23,8 @@ POST {{hostname}}/{{api_v1}}/tokens HTTP/1.1
 {
   "id": "124"
 }
+
+
+### 
+
+GET {{hostname}}/{{api_v1}}/tokens/2 HTTP/1.1
