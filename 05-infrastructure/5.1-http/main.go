@@ -21,6 +21,8 @@ func main() {
 		}
 	})
 
+	mux.HandleFunc("GET /api/v1/users/{id}", UserID)
+
 	log.Println("http server on :8080")
 	if err := http.ListenAndServe(":8080", mux); err != nil {
 		log.Fatal(err)
