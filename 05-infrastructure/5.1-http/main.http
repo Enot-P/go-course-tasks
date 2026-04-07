@@ -14,3 +14,12 @@ GET {{hostname}}/health HTTP/1.1
 # Content-Type: application/json
 
 GET {{hostname}}/{{api_v1}}/users/2 HTTP/1.1
+
+
+### 
+
+POST {{hostname}}/{{api_v1}}/tokens HTTP/1.1
+
+{
+  "id": "124"
+}

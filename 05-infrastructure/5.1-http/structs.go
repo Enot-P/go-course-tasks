@@ -7,3 +7,7 @@ type User struct {
 type ErrorResponse struct {
 	Message string `json:"message,omitempty"`
 }
+
+type Token struct {
+	Access_token string `json:"access_token,omitempty"`
+}
